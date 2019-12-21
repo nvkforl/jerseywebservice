@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -29,9 +31,34 @@ import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 
 import com.jercey.ws.util.ReadFromPropertiesFiles;
 import com.jercey.ws.valObj.Author;
+import com.jercey.ws.valObj2.Author2;
 
 @Path("/v1")
 public class Controller {
+	
+	@POST
+	@Path("/jaxblist")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response jaxblist(Author author) throws IOException {
+		
+		Author2 list2 = new Author2();
+		list2.setFirstName(author.getFirstName());
+		list2.setLastName(author.getLastName());
+		list2.setRequestType(author.getRequestType());
+		list2.getFileKeys().add("srt1");
+		list2.getFileKeys().add("srt2");
+		list2.getFileKeys().add("srt3");
+		list2.getFileKeys().add("srt4");
+		list2.getFileKeys().addAll(author.getFileKeys());
+		list2.setZoomint(1);
+		list2.getZoomList().add(5);
+		list2.getZoomList().add(6);
+		list2.getZoomList().add(7);
+		list2.getZoomList().add(8);
+				
+		return Response.status(Response.Status.OK).entity(list2).build();
+	}
 
 	@POST
 	@Path("/ping")

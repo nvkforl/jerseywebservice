@@ -1,0 +1,24 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Author2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="FileKeys" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element type="xs:string" name="FirstName"/>
+        <xs:element type="xs:string" name="LastName"/>
+        <xs:element type="xs:string" name="RequestType"/>
+        <xs:element type="xs:int" name="Zoomint"/>
+        <xs:element type="xs:int" name="ZoomList" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+{
+    "FileKeys": ["srt1","srt2","srt3", "srt4", "key1", "key2", "key3", "key4" ],
+    "FirstName": "ramesh",
+    "LastName": "suresh",
+    "RequestType": "LHS",
+    "Zoomint": 1,
+    "ZoomList": [ 5, 6, 7, 8 ]
+}
