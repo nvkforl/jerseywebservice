@@ -35,13 +35,13 @@ import com.jercey.ws.valObj2.Author2;
 
 @Path("/v1")
 public class Controller {
-	
+
 	@POST
 	@Path("/jaxblist")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response jaxblist(Author author) throws IOException {
-		
+
 		Author2 list2 = new Author2();
 		list2.setFirstName(author.getFirstName());
 		list2.setLastName(author.getLastName());
@@ -56,7 +56,7 @@ public class Controller {
 		list2.getZoomList().add(6);
 		list2.getZoomList().add(7);
 		list2.getZoomList().add(8);
-				
+
 		return Response.status(Response.Status.OK).entity(list2).build();
 	}
 
@@ -71,13 +71,28 @@ public class Controller {
 		 */
 
 		ReadFromPropertiesFiles readFromPropertiesFiles = ReadFromPropertiesFiles.getInstance();
-		Map map = readFromPropertiesFiles.getPropertyMap();
+		String key1 = readFromPropertiesFiles.getPropertyMap().get("fileUploadDirir");
+		String key2 = readFromPropertiesFiles.getPropertyMap().get("abc");
+		String key3 = readFromPropertiesFiles.getPropertyMap().get("qwerty");
+		String key4 = readFromPropertiesFiles.getPropertyMap().get("lank");
+		
+		ReadFromPropertiesFiles readFromPropertiesFiles1 = ReadFromPropertiesFiles.getInstance();
+		String key5 = readFromPropertiesFiles1.getPropertyMap().get("fileUploadDirir");
+		String key6 = readFromPropertiesFiles1.getPropertyMap().get("abc");
+		String key7 = readFromPropertiesFiles1.getPropertyMap().get("qwerty");
+		String key8 = readFromPropertiesFiles1.getPropertyMap().get("lank");
 
+		ReadFromPropertiesFiles readFromPropertiesFiles2 = ReadFromPropertiesFiles.getInstance();
+		String key9 = readFromPropertiesFiles2.getPropertyMap().get("fileUploadDirir");
+		String key10 = readFromPropertiesFiles2.getPropertyMap().get("abc");
+		String key11 = readFromPropertiesFiles2.getPropertyMap().get("qwerty");
+		String key12 = readFromPropertiesFiles2.getPropertyMap().get("lank");
+		
 		// fileDownloadFromClientFromKey();
 
 		fileUploadJsonFile2();
 
-		System.out.println(map);
+		//System.out.println(map);
 
 		return Response.status(Response.Status.OK).entity(author).build();
 	}
@@ -90,8 +105,7 @@ public class Controller {
 				new File("D:\\InfyProject\\readFile\\20191208142857_ExcludeFile.txt"));
 		FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
 		final FormDataMultiPart multipart = (FormDataMultiPart) formDataMultiPart.field("barometerId", "1234")
-                .field("messageId", "asdfsda")
-				.bodyPart(filePart);
+				.field("messageId", "asdfsda").bodyPart(filePart);
 
 		final WebTarget target = client.target("http://localhost:8082/uploadFile");
 		final Response response = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
@@ -104,30 +118,28 @@ public class Controller {
 
 	public void fileUploadJsonFile2() throws IOException {
 		final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
-		
-		 File initialFile = new File("D:\\InfyProject\\readFile\\20191208142857_ExcludeFile.txt");
-		 InputStream targetStream = new FileInputStream(initialFile);
-		 StreamDataBodyPart streamDataBodyPart = new StreamDataBodyPart("file", targetStream);
-		 
-		 MultiPart multipartEntity =
-		            new FormDataMultiPart()
-		                    .field("barometerId", "1234")
-		                    .field("messageId", "asdfsda")
-		                    .bodyPart(streamDataBodyPart);
-		 
-		 Builder builder =  client.target("http://localhost:8082/uploadFile")
-				 						.request()
-				 						.header("Authorization", "Basic bml0aXNoOmtyaXNobmE=");
-		 
-		 Invocation invocation = builder.buildPost(Entity.entity(multipartEntity, MediaType.MULTIPART_FORM_DATA));
-		 Response  response = invocation.invoke();
-		 
-		 String respContent  = response.readEntity(String.class);
-		 
-		 //final Response response = target.request().post(Entity.entity(multipartEntity, MediaType.MULTIPART_FORM_DATA));
-		 
-		 System.out.println(respContent);
-		    
+
+		File initialFile = new File("D:\\InfyProject\\readFile\\20191208142857_ExcludeFile.txt");
+		InputStream targetStream = new FileInputStream(initialFile);
+		StreamDataBodyPart streamDataBodyPart = new StreamDataBodyPart("file", targetStream);
+
+		MultiPart multipartEntity = new FormDataMultiPart().field("barometerId", "1234").field("messageId", "asdfsda")
+				.bodyPart(streamDataBodyPart);
+
+		Builder builder = client.target("http://localhost:8082/uploadFile").request().header("Authorization",
+				"Basic bml0aXNoOmtyaXNobmE=");
+
+		Invocation invocation = builder.buildPost(Entity.entity(multipartEntity, MediaType.MULTIPART_FORM_DATA));
+		Response response = invocation.invoke();
+
+		String respContent = response.readEntity(String.class);
+
+		// final Response response =
+		// target.request().post(Entity.entity(multipartEntity,
+		// MediaType.MULTIPART_FORM_DATA));
+
+		System.out.println(respContent);
+
 	}
 
 	// https://stackoverflow.com/questions/10587561/password-protected-zip-file-in-java/32253028#32253028
