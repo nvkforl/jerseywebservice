@@ -203,7 +203,7 @@
 		<dependency>
 			<groupId>struts</groupId>
 			<artifactId>struts</artifactId>
-			<version>1.1</version>
+			<version>1.2.9</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
